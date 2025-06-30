@@ -6313,3 +6313,95 @@ class Solution {
     }
 }
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+142)
+Find the length of the longest valid substring. The valid String contains open and closed parentheses, and atleast one lowercase character
+input : (a)(bc)()
+output : 7
+input : ()
+output : 0;
+
+import java.util.Stack;
+
+class Main{
+     public static void main(String[]args){
+           String s = "(a)(bc)()";
+           System.out.println(findLongestValidSubstring(s));
+     }
+     
+     private static int findLongestValidSubstring(String s){
+            int length = s.length();
+            boolean[] visited = new boolean[length];
+            Stack<Integer> stack = new Stack();
+            
+            for(int i=0;i<length;i++){
+                 char ch = s.charAt(i);
+                 if(ch=='('){
+                       stack.push(i);
+                 }
+                 else if(ch==')'){
+                       if(!stack.isEmpty()){
+                             int start = stack.pop();
+                             String insideString = s.substring(start+1,i);
+                             if(insideString.matches(".*[a-z]*.")){
+                                   for(int j = start ; j<=i;j++)
+                                         visited[j] = true;
+                             }
+                       }
+                 }
+            }
+            
+            int currentLength = 0;
+            int maxLength = 0;
+            for(int i=0;i<length;i++){
+                if(visited[i]){
+                     currentLength++;
+                     maxLength = Math.max(currentLength, maxLength);
+                }
+                else
+                      currentLength = 0;
+            }
+            return maxLength;
+     }
+}
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+143)
+waveform pattern of Array (a1 <= a2 >= a3 <= a4 >= a5 ...   // o r//  a1 >= a2 <= a3 >= a4 <= a5 ...)
+input: {10,15,20,3,8,6}
+for(a1 >= a2 <= a3 >= a4 <= a5 )
+output : [10, 20, 3, 15, 6, 8]
+for(a1 <= a2 >= a3 <= a4 >= a5 )
+output : [15, 10, 20, 3, 8, 6]
+
+import java.util.Arrays;
+
+class Main{
+      public static void main(String[]args){
+             int[] nums = {10, 15, 20, 3, 8, 6};
+             //upDownConversion(nums);
+           //  downUpConversion(nums);
+      }
+      
+      public static void downUpConversion(int nums[]){
+             for(int i=0;i<nums.length;i+=2){
+                  if(nums[i] < nums[i+1])
+                       swap(nums, i, i+1);
+             }
+             System.out.println(Arrays.toString(nums));
+      }
+      
+      public static void upDownConversion(int nums[]){
+            for(int i=1;i<nums.length;i+=2){
+                if(nums[i-1] > nums[i])
+                     swap(nums, i-1, i);
+                if(i+1 < nums.length && nums[i] < nums[i+1])
+                     swap(nums, i, i+1);
+            }
+      }
+      
+      private static void swap(int nums[], int left , int right){
+             int temp = nums[left];
+             nums[left] = nums[right];
+             nums[right] = temp;
+      }
+}
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
