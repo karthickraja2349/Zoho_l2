@@ -6405,3 +6405,123 @@ class Main{
       }
 }
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+                                                                                             2/7/25/137
+144)
+Given a 4*4 matrix select records based on the given criteria
+1 22 33 44
+2 45 67 89
+3 21 54 78
+4 67 98 11
+Consider Column 1 as roll number - R, Column 2 as Mark1 - A, Column 3 as Mark2 - B and Column 4 as Mark3 - C
+Possible criteria
+> - greater than
+< - less than
+= - equal to
+Input Format: The 1st line contains the column(s) that needs to be shown in the output. * will be considered as all. The 2nd line contains the criteria/ conditions
+
+Sample input 1:                   Sample Input 2:
+*                                              C
+A>40                                       C<60
+Output:                                   Output:
+2 45 67 89                             44
+4 67 98 11                             11
+
+import java.util.Scanner;
+import java.util.Map;
+import java.util.HashMap;
+
+class Main{
+      @SuppressWarnings("unchecked")
+      public static void main(String[]args){
+           Scanner input = new Scanner(System.in);
+           
+            int[][] data = {
+           	 {1, 22, 33, 44},
+           	 {2, 45, 67, 89},
+           	 {3, 21, 54, 78},
+           	 {4, 67, 98, 11}
+           };
+           
+           Map<String, Integer> map = new HashMap();
+           map.put("R",0);
+           map.put("A",1);
+           map.put("B",2);
+           map.put("C",3);
+           
+           System.out.println("Enter the Values:");
+           System.out.println("Enter the Column for Display:");
+           String displayColumn = input.nextLine().trim();
+           System.out.println("Enter the condition");
+           String condition = input.nextLine().trim();
+           
+           char colName = condition.charAt(0);
+           char operator = condition.charAt(1);
+           int value = Integer.parseInt(condition.substring(2));
+           
+           int respectiveColumn = map.get(String.valueOf(colName));
+           
+           for(int i=0;i<data.length;i++){
+                  int element = data[i][respectiveColumn];
+                  boolean flag = false;
+                  
+                  if(operator == '>' && element > value)
+                        flag = true;
+                  else if(operator == '<' && element < value)
+                         flag = true;
+                  else if(operator == '=' && element == value)
+                         flag = true;
+                         
+                  if(flag){
+                         if(displayColumn.equals("*"))
+                                for(int j=0; j<4 ;j++)
+                                       System.out.print(data[i][j] + " " );
+                         else {
+                                 String cols[] = displayColumn.split("");
+                                 for(String col : cols){
+                                          int index = map.get(col);
+                                          System.out.print(data[i][index] + " ");
+                                 }
+                         }
+                         System.out.println();
+                  }
+           }
+      }
+}
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+145)
+Valid parentheses
+
+import java.util.Stack;
+
+class Brackets{
+      @SuppressWarnings("unchecked")
+      public static void main(String[]args){
+           String s = "(()(()))";
+           Stack<Character> stack = new Stack();
+           boolean flag  = false;
+           
+           for(int i=0;i<s.length();i++){
+                char ch = s.charAt(i);
+                 if(ch=='(' || ch=='{' || ch=='['){
+                          stack.push(ch);
+                 }
+                 else{
+                      if(!stack.isEmpty()){
+                           char val = stack.peek();
+                           if(ch == ')' && val == '(' || ch == '}' && val == '{' || ch == ']' && val =='[')
+                                   stack.pop();
+                           else{
+                                 flag = false;
+                                 break;
+                           }
+                      }
+                 }
+           }
+           if(!flag && stack.isEmpty()){
+                 System.out.println("valid String");
+           }
+           else
+                 System.out.println("Invalid String");
+      }
+}
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
