@@ -3652,7 +3652,7 @@ class Main {
         int maxLength = 0;
         
         for(int num : nums){
-             if(!set.contains(num-1){
+             if(!set.contains(num-1)){
                   List<Integer> temp = new ArrayList();
                   int currentNum = num;
                   
