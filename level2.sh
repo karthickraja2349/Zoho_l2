@@ -6493,35 +6493,37 @@ Valid parentheses
 
 import java.util.Stack;
 
-class Brackets{
-      @SuppressWarnings("unchecked")
-      public static void main(String[]args){
-           String s = "(()(()))";
-           Stack<Character> stack = new Stack();
-           boolean flag  = false;
-           
-           for(int i=0;i<s.length();i++){
-                char ch = s.charAt(i);
-                 if(ch=='(' || ch=='{' || ch=='['){
-                          stack.push(ch);
-                 }
-                 else{
-                      if(!stack.isEmpty()){
-                           char val = stack.peek();
-                           if(ch == ')' && val == '(' || ch == '}' && val == '{' || ch == ']' && val =='[')
-                                   stack.pop();
-                           else{
-                                 flag = false;
-                                 break;
-                           }
-                      }
-                 }
-           }
-           if(!flag && stack.isEmpty()){
-                 System.out.println("valid String");
-           }
-           else
-                 System.out.println("Invalid String");
-      }
+class Brackets {
+    public static void main(String[] args) {
+        String s = "()())";
+        Stack<Character> stack = new Stack<>();
+        boolean flag = false;
+
+        for (int i = 0; i < s.length(); i++) {
+            char ch = s.charAt(i);
+            if (ch == '(' || ch == '{' || ch == '[') 
+                stack.push(ch);
+             else {
+                if (!stack.isEmpty()) {
+                    char val = stack.peek();
+                    if (ch == ')' && val == '(' || ch == '}' && val == '{' || ch == ']' && val == '[') 
+                        stack.pop();
+                    else {
+                        flag = true;
+                        break;
+                    }
+                } 
+                else {
+                    flag = true;
+                    break;
+                }
+            }
+        }
+
+        if (!flag && stack.isEmpty()) 
+            System.out.println("valid String");
+        else 
+            System.out.println("Invalid String");
+    }
 }
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
